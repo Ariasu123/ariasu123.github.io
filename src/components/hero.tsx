@@ -11,8 +11,7 @@ const fadeUp = {
 
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();
-  const introText =
-    "I am Your Name. I write about engineering, product, and curiosity.";
+  const introText = "我是 Ariasu。";
   const [displayText, setDisplayText] = useState(
     shouldReduceMotion ? introText : ""
   );
@@ -60,8 +59,7 @@ export function Hero() {
         animate="visible"
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        This is a clean writing space for notes, experiments, and the projects
-        I am exploring right now.
+        你好，世界。这是我在数字荒原建立的第一个据点。
       </motion.p>
       <motion.div
         className="flex flex-wrap gap-3"
