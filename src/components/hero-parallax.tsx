@@ -76,7 +76,7 @@ export function HeroParallax({ scrollTargetId }: HeroParallaxProps) {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden flex flex-col justify-center items-start">
       <motion.div className="absolute inset-0 z-0" style={{ y }}>
         <img
           src="/hero-bg.jpg"
@@ -85,10 +85,10 @@ export function HeroParallax({ scrollTargetId }: HeroParallaxProps) {
         />
       </motion.div>
       <div className="absolute inset-0 z-10 bg-black/50" />
-      <div className="relative z-20 flex h-full items-center justify-center px-6 text-center">
-        <div className="space-y-4 font-mono text-gray-100">
+      <div className="relative z-20 px-6">
+        <div className="ml-4 max-w-4xl space-y-4 text-left font-mono text-gray-100 sm:ml-8">
           <p
-            className="text-2xl sm:text-3xl"
+            className="text-4xl md:text-5xl lg:text-6xl"
             style={{ textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}
           >
             {displayText}
@@ -98,7 +98,7 @@ export function HeroParallax({ scrollTargetId }: HeroParallaxProps) {
           </p>
           <p
             className={cn(
-              "text-sm text-muted-foreground transition-opacity duration-300",
+              "text-xl text-muted-foreground transition-opacity duration-300 md:text-2xl",
               displayText.length >= quote.text.length ? "opacity-100" : "opacity-0"
             )}
           >
