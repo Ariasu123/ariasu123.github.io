@@ -23,7 +23,7 @@ export function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/70 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border bg-black/40 backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
         <Link href="/" className="text-sm font-semibold text-foreground">
           {siteConfig.name}
@@ -66,7 +66,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="overflow-hidden border-t border-border bg-background/70 backdrop-blur md:hidden"
+            className="overflow-hidden border-t border-border bg-black/40 backdrop-blur-md md:hidden"
           >
             <nav className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-6 py-4 text-sm">
               {navItems.map((item) => (

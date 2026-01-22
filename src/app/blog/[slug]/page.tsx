@@ -88,7 +88,7 @@ export default function BlogPostPage({ params }: PostPageProps) {
           </header>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <div className="prose max-w-none dark:prose-invert">
+          <div className="prose max-w-none">
             <MDXRemote
               source={post.content}
               components={mdxComponents}

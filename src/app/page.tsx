@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FadeIn } from "@/components/fade-in";
 import { Hero } from "@/components/hero";
+import { SpotlightCard } from "@/components/spotlight-card";
 import { formatDate } from "@/lib/format";
 import { getRecentPosts } from "@/lib/posts";
 
@@ -32,7 +33,7 @@ export default function Home() {
               <div className="grid gap-6">
                 {posts.map((post, index) => (
                   <FadeIn key={post.slug} delay={index * 0.06}>
-                    <article className="border border-border bg-card p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(255,79,216,0.18)]">
+                    <SpotlightCard className="border border-border bg-black/40 p-6 backdrop-blur-md transition hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(255,255,255,0.08)]">
                       <div className="space-y-2">
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
                           {formatDate(post.date)}
@@ -49,7 +50,7 @@ export default function Home() {
                           {post.description}
                         </p>
                       </div>
-                    </article>
+                    </SpotlightCard>
                   </FadeIn>
                 ))}
               </div>
