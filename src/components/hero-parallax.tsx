@@ -110,9 +110,9 @@ export function HeroParallax({ scrollTargetId }: HeroParallaxProps) {
         type="button"
         onClick={handleScrollClick}
         aria-label="Scroll to content"
-        className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-gray-100 transition hover:text-white"
+        className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 transition"
       >
-        <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-md">
+        <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-900 shadow-sm transition hover:bg-gray-50 dark:border-none dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700">
           <ChevronDown className="h-5 w-5 animate-bounce" />
         </span>
       </button>
