@@ -34,6 +34,12 @@ export function SiteSearch() {
     command()
   }, [])
 
+  const navigateTo = (slug: string) => {
+    const path = `/blog/${slug.toLowerCase()}`
+    console.log("Navigating to:", path)
+    router.push(path)
+  }
+
   return (
     <>
       <Button
@@ -53,15 +59,15 @@ export function SiteSearch() {
           
           {/* 只保留最近文章，或者你以后接真实的搜索结果 */}
           <CommandGroup heading="Recent Posts">
-            <CommandItem onSelect={() => runCommand(() => router.push("/posts/hello-world"))}>
+            <CommandItem onSelect={() => runCommand(() => navigateTo("hello-world"))}>
               <FileText className="mr-2 h-4 w-4" />
               <span>Hello World</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => router.push("/posts/vibe-coding"))}>
+            <CommandItem onSelect={() => runCommand(() => navigateTo("hello-vibe-coding"))}>
               <FileText className="mr-2 h-4 w-4" />
               <span>Why I Started Vibe Coding</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => router.push("/posts/building-this-site"))}>
+            <CommandItem onSelect={() => runCommand(() => navigateTo("building-this-site"))}>
               <FileText className="mr-2 h-4 w-4" />
               <span>Building this site</span>
             </CommandItem>
