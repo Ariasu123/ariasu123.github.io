@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-neutral-900">
-      <HeroParallax title="I am Ariasu" scrollTargetId="content-start" />
+      <HeroParallax scrollTargetId="content-start" />
 
       <div className="relative z-10 -mt-24 pb-24">
         <div
