@@ -1,206 +1,131 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  Check,
-  Home,
-  Layers,
-  Library,
-  Mail,
-  Menu,
-  Copy,
-  Rocket,
-  Search,
-  UserCircle,
-  X,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { siteConfig } from "@/lib/site";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ThemeToggle } from "@/components/theme-toggle"; // 根据你的截图，你用的是这个组件
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Mail, Copy, Check, Search, Home, Rocket, Layers, User } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
-const iconMap = {
-  home: Home,
-  rocket: Rocket,
-  library: Library,
-  layers: Layers,
-  user: UserCircle,
-} as const;
+// 定义导航链接
+const navItems = [
+  { name: "首页", href: "/", icon: Home },
+  { name: "项目实战", href: "/projects", icon: Rocket },
+  { name: "技术栈", href: "/stack", icon: Layers },
+  { name: "关于我", href: "/about", icon: User },
+];
 
 export function Navbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const email = "13484079700@163.com";
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    return () => {
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  const handleCopy = async () => {
-    if (copyTimeoutRef.current) {
-      clearTimeout(copyTimeoutRef.current);
-    }
-
-    try {
-      await navigator.clipboard.writeText(email);
-      setIsCopied(true);
-      toast.success("Email copied to clipboard!");
-      copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
-    } catch (error) {
-      toast.error("Unable to copy email.");
-    }
+  const handleCopy = () => {
+    navigator.clipboard.writeText(email);
+    setIsCopied(true);
+    toast.success("邮箱已复制！");
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const navItems = siteConfig.navItems ?? [];
-
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-black/40 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-sm font-semibold text-gray-100">
-          {siteConfig.name}
-        </Link>
-        <nav className="hidden flex-1 items-center justify-center gap-2 text-sm md:flex">
-          {navItems.map((item) => {
-            const Icon = iconMap[item.icon as keyof typeof iconMap];
-            return (
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-4">
+        {/* Logo 区域 */}
+        <div className="mr-4 flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2 font-bold">
+            <span>JtLe</span>
+          </Link>
+          
+          {/* 桌面端导航 */}
+          <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-400 transition hover:bg-secondary hover:text-gray-100",
-                  pathname === item.href && "bg-secondary text-gray-100"
+                  "flex items-center gap-2 transition-colors hover:text-foreground/80",
+                  pathname === item.href ? "text-foreground" : "text-foreground/60"
                 )}
               >
-                {Icon ? <Icon className="h-4 w-4" /> : null}
-                <span>{item.label}</span>
+                <item.icon className="size-4" />
+                {item.name}
               </Link>
-            );
-          })}
-        </nav>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            aria-label="Search"
-            className="inline-flex h-9 w-9 items-center justify-center border border-border text-gray-100 transition hover:border-primary hover:text-primary"
-          >
-            <Search className="h-4 w-4" />
-          </button>
-          <ThemeToggle />
+            ))}
+          </nav>
+        </div>
+
+        {/* 右侧功能区 */}
+        <div className="flex flex-1 items-center justify-end space-x-2">
+          {/* 搜索按钮 (装饰用) */}
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Search className="size-4" />
+            <span className="sr-only">Search</span>
+          </Button>
+
+          {/* --- Contact Me 弹窗 --- */}
           <Dialog>
             <DialogTrigger asChild>
               <Button
-                size="sm"
                 variant="default"
-                className="hidden rounded-full md:inline-flex"
+                size="sm"
+                className="hidden h-8 rounded-full px-4 text-xs md:inline-flex"
               >
                 <Mail className="mr-2 size-3.5" />
                 Contact Me
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
-              <DialogHeader className="space-y-2">
+              <DialogHeader>
                 <DialogTitle>Get in touch</DialogTitle>
-                <p className="text-sm text-muted-foreground">
-                  Feel free to reach out for collaborations or just a chat about
-                  Vibe Coding.
-                </p>
+                <DialogDescription>
+                  Feel free to reach out for collaborations.
+                </DialogDescription>
               </DialogHeader>
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <Input readOnly value={email} />
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="outline"
-                    onClick={handleCopy}
-                    aria-label="Copy email"
-                  >
-                    {isCopied ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </Button>
+              <div className="flex items-center space-x-2 py-4">
+                <div className="grid flex-1 gap-2">
+                  <Input
+                    id="email"
+                    defaultValue={email}
+                    readOnly
+                    className="h-9 bg-muted/50"
+                  />
                 </div>
+                <Button type="submit" size="sm" className="px-3" onClick={handleCopy}>
+                  {isCopied ? (
+                    <Check className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+              <div className="flex justify-center border-t pt-4">
                 <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => {
-                    window.location.href = `mailto:${email}`;
-                  }}
-                  className="w-full"
+                  variant="link"
+                  size="sm"
+                  className="text-muted-foreground"
+                  onClick={() => (window.location.href = `mailto:${email}`)}
                 >
                   Open Mail App
                 </Button>
               </div>
             </DialogContent>
           </Dialog>
-          <button
-            type="button"
-            aria-label="Toggle menu"
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            onClick={() => setOpen((prev) => !prev)}
-            className="inline-flex h-9 w-9 items-center justify-center border border-border text-gray-100 transition hover:border-primary hover:text-primary md:hidden"
-          >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
+          {/* --- 弹窗结束 --- */}
+
+          <ThemeToggle />
         </div>
       </div>
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id="mobile-nav"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="overflow-hidden border-t border-border bg-black/40 backdrop-blur-md md:hidden"
-          >
-            <nav className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-6 py-4 text-sm">
-              {navItems.map((item) => {
-                const Icon = iconMap[item.icon as keyof typeof iconMap];
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "flex items-center gap-2 rounded-md px-2 py-2 text-gray-400 transition hover:bg-secondary hover:text-gray-100",
-                      pathname === item.href && "bg-secondary text-gray-100"
-                    )}
-                  >
-                    {Icon ? <Icon className="h-4 w-4" /> : null}
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
-            </nav>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
     </header>
   );
 }

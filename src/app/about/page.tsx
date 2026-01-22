@@ -35,7 +35,7 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
                 <p>
-                  我是 Ariasu。就读于华中科技大学集成电路学院，研一学生。
+                  我是 Ariasu。就读于华中科技大学集成电路学院，目前研一。
                 </p>
                 <p>
                   一名正在探索 AI 编程边界的开发者 (Vibe Coder)。 在这个
