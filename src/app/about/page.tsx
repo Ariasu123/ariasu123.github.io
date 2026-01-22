@@ -14,11 +14,11 @@ export default function AboutPage() {
 
       <FadeIn delay={0.1}>
         <section className="mt-10 grid gap-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-          <div className="h-72 w-full overflow-hidden rounded-xl border border-border bg-gray-800/50 backdrop-blur-md">
+          <div className="flex w-full justify-center md:justify-start">
             <img
-              src="/avatar.jpg"
+              src="https://github.com/Ariasu123.png"
               alt="Ariasu"
-              className="h-full w-full rounded-xl object-cover shadow-lg"
+              className="h-64 w-64 rounded-xl object-cover shadow-lg"
             />
           </div>
           <div className="space-y-4">
