@@ -125,6 +125,12 @@
   body {
     @apply bg-background text-muted-foreground font-mono transition-colors duration-200;
     line-height: 1.75;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+      url("/bg.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
   }
 }
 
