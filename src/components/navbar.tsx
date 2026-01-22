@@ -67,10 +67,10 @@ export function Navbar() {
 
         {/* 右侧功能区 */}
         <div className="flex flex-1 items-center justify-end space-x-2">
-          {/* 搜索按钮 (装饰用) */}
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Search className="size-4" />
-            <span className="sr-only">Search</span>
+          {/* 搜索按钮 (已修复 size 报错) */}
+          <Button variant="ghost" size="sm" className="h-8 w-8 px-0">
+              <Search className="size-4" />
+              <span className="sr-only">Search</span>
           </Button>
 
           {/* --- Contact Me 弹窗 --- */}
@@ -111,9 +111,9 @@ export function Navbar() {
               </div>
               <div className="flex justify-center border-t pt-4">
                 <Button
-                  variant="link"
+                  variant="ghost"
                   size="sm"
-                  className="text-muted-foreground"
+                  className="text-muted-foreground hover:underline"
                   onClick={() => (window.location.href = `mailto:${email}`)}
                 >
                   Open Mail App
