@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FadeIn } from "@/components/fade-in";
+import { HeroParallax } from "@/components/hero-parallax";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { formatDate } from "@/lib/format";
 import { getRecentPosts } from "@/lib/posts";
@@ -9,15 +10,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-neutral-900">
-      <section
-        className="relative flex h-[60vh] min-h-[500px] items-center justify-center bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black/50" />
-        <h1 className="relative z-10 text-4xl font-semibold text-gray-100 sm:text-5xl">
-          I am Ariasu
-        </h1>
-      </section>
+      <HeroParallax title="I am Ariasu" />
 
       <div className="relative z-10 -mt-24 pb-24">
         <div className="mx-auto w-full max-w-4xl rounded-t-3xl bg-background px-6 pt-10 shadow-2xl">
