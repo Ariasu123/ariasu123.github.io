@@ -67,7 +67,7 @@ export default function BlogPostPage({ params }: PostPageProps) {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 pb-24 pt-16">
-      <article className="space-y-10">
+      <article className="space-y-10 rounded-xl bg-white/90 p-6 shadow-sm dark:bg-transparent">
         <FadeIn>
           <header className="space-y-3">
             <Link

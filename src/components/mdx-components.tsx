@@ -16,4 +16,13 @@ function MdxLink({ className, ...props }: ComponentPropsWithoutRef<"a">) {
 
 export const mdxComponents: MDXComponents = {
   a: MdxLink,
+  pre: ({ className, ...props }) => (
+    <pre
+      className={cn(
+        "!bg-zinc-950 !text-zinc-50 border border-zinc-800",
+        className
+      )}
+      {...props}
+    />
+  ),
 };

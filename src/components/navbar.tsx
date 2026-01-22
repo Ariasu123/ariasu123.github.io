@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SiteSearch } from "@/components/site-search";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -68,10 +69,7 @@ export function Navbar() {
         {/* 右侧功能区 */}
         <div className="flex flex-1 items-center justify-end space-x-2">
           {/* 搜索按钮 (已修复 size 报错) */}
-          <Button variant="ghost" size="sm" className="h-8 w-8 px-0">
-              <Search className="size-4" />
-              <span className="sr-only">Search</span>
-          </Button>
+          <SiteSearch />
 
           {/* --- Contact Me 弹窗 --- */}
           <Dialog>
