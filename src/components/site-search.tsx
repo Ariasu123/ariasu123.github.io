@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { Calculator, Calendar, CreditCard, Settings, Smile, User, Rocket, Layers, FileText, Search } from "lucide-react"
+import {  CreditCard,  Smile, User, Rocket, Layers, FileText, Search } from "lucide-react"
 
 import {
   CommandDialog,

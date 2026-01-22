@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Mail, Copy, Check, Search, Home, Rocket, Layers, User } from "lucide-react";
+import { Mail, Copy, Check,  Home, Rocket, Layers, User } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
