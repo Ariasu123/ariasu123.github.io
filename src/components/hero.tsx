@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Mail } from "lucide-react";
 import Link from "next/link";
 
 const fadeUp = {
@@ -75,9 +76,10 @@ export function Hero() {
           View all posts
         </Link>
         <a
-          href="mailto:hello@example.com"
-          className="inline-flex items-center justify-center border border-border px-5 py-2 text-sm font-medium text-foreground transition hover:border-accent hover:text-accent"
+          href="mailto:13484079700@163.com"
+          className="inline-flex items-center justify-center gap-2 border border-border px-5 py-2 text-sm font-medium text-foreground transition hover:border-primary hover:text-primary"
         >
+          <Mail className="h-4 w-4" />
           Contact me
         </a>
       </motion.div>
