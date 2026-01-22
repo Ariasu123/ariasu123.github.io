@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import {  CreditCard,  Smile, User, Rocket, Layers, FileText, Search } from "lucide-react"
+import { FileText, Search } from "lucide-react" // 只保留用到的图标
 
 import {
   CommandDialog,
@@ -12,7 +12,6 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command"
 import { Button } from "@/components/ui/button"
 
@@ -20,7 +19,6 @@ export function SiteSearch() {
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
 
-  // 监听 Cmd+K 或 Ctrl+K 快捷键
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -32,7 +30,6 @@ export function SiteSearch() {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  // 选中后的回调
   const runCommand = React.useCallback((command: () => void) => {
     setOpen(false)
     command()
@@ -40,7 +37,6 @@ export function SiteSearch() {
 
   return (
     <>
-      {/* 1. 触发按钮 (Trigger) */}
       <Button
         variant="ghost"
         size="sm"
@@ -51,35 +47,12 @@ export function SiteSearch() {
         <span className="sr-only">Search</span>
       </Button>
 
-      {/* 2. 搜索弹窗 (Dialog) */}
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder="Search posts..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           
-          {/* 分组一：导航 */}
-          <CommandGroup heading="Suggestions">
-            <CommandItem onSelect={() => runCommand(() => router.push("/"))}>
-              <Smile className="mr-2 h-4 w-4" />
-              <span>Home</span>
-            </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => router.push("/projects"))}>
-              <Rocket className="mr-2 h-4 w-4" />
-              <span>Projects</span>
-            </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => router.push("/stack"))}>
-              <Layers className="mr-2 h-4 w-4" />
-              <span>Tech Stack</span>
-            </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => router.push("/about"))}>
-              <User className="mr-2 h-4 w-4" />
-              <span>About Me</span>
-            </CommandItem>
-          </CommandGroup>
-          
-          <CommandSeparator />
-
-          {/* 分组二：最新文章 (这里暂时是硬编码的，后续可以换成真实数据) */}
+          {/* 只保留最近文章，或者你以后接真实的搜索结果 */}
           <CommandGroup heading="Recent Posts">
             <CommandItem onSelect={() => runCommand(() => router.push("/posts/hello-world"))}>
               <FileText className="mr-2 h-4 w-4" />
@@ -89,16 +62,9 @@ export function SiteSearch() {
               <FileText className="mr-2 h-4 w-4" />
               <span>Why I Started Vibe Coding</span>
             </CommandItem>
-          </CommandGroup>
-
-          <CommandSeparator />
-
-          {/* 分组三：系统功能 */}
-          <CommandGroup heading="Settings">
-            <CommandItem onSelect={() => runCommand(() => window.location.href = "mailto:13484079700@163.com")}>
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Contact Me</span>
-              <CommandShortcut>⌘C</CommandShortcut>
+            <CommandItem onSelect={() => runCommand(() => router.push("/posts/building-this-site"))}>
+              <FileText className="mr-2 h-4 w-4" />
+              <span>Building this site</span>
             </CommandItem>
           </CommandGroup>
         </CommandList>
