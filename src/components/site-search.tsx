@@ -13,12 +13,20 @@ import {
   CommandList,
 } from "@/components/ui/command"
 
-export function SiteSearch() {
+// 定义一个简单的接口，或者使用 import type { PostMeta } from "@/lib/posts"
+interface PostMeta {
+  slug: string
+  title: string
+  date: string
+  // 其他字段这里暂时用不到
+}
+
+export function SiteSearch({ posts = [] }: { posts?: PostMeta[] }) {
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
   const commandRef = React.useRef<HTMLDivElement>(null)
 
-  // 监听点击外部，自动关闭下拉框
+  // 监听点击外部关闭
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (commandRef.current && !commandRef.current.contains(event.target as Node)) {
@@ -36,41 +44,40 @@ export function SiteSearch() {
 
   return (
     <div ref={commandRef} className="relative w-full max-w-sm md:w-64 z-50">
-      {/* overflow-visible: 允许下拉菜单超出圆角边框显示
-      */}
-      <Command className="rounded-lg border bg-muted/50 overflow-visible">
-        
-        {/* 输入框区域 */}
+      <Command 
+        className="rounded-lg border bg-muted/50 overflow-visible"
+        // 关键：加上 filter 属性，防止因为某些特殊字符导致搜索匹配失败
+        filter={(value, search) => {
+           if (value.toLowerCase().includes(search.toLowerCase())) return 1
+           return 0
+        }}
+      >
         <div className="flex items-center pr-3">
             <CommandInput 
-                placeholder="搜索..." 
+                placeholder="搜索文章..." 
                 className="h-9 border-none bg-transparent focus:ring-0 outline-none [&_svg]:hidden pl-3" 
-                // [&_svg]:hidden -> 隐藏默认的左侧放大镜
-                // pl-3 -> 让文字靠左对齐 (去掉原本给图标留的左边距)
                 onFocus={() => setOpen(true)} 
             />
-            {/* 我们自定义的右侧图标 */}
             <Search className="size-4 shrink-0 opacity-50 text-muted-foreground" />
         </div>
 
-        {/* 搜索结果下拉框 (悬浮层) */}
         {open && (
           <div className="absolute top-[calc(100%+6px)] left-0 w-full rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95">
              <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup heading="Recent Posts">
-                  <CommandItem onSelect={() => runCommand(() => router.push("/posts/hello-world"))}>
-                    <FileText className="mr-2 h-4 w-4" />
-                    <span>Hello World</span>
-                  </CommandItem>
-                  <CommandItem onSelect={() => runCommand(() => router.push("/posts/vibe-coding"))}>
-                    <FileText className="mr-2 h-4 w-4" />
-                    <span>Why I Started Vibe Coding</span>
-                  </CommandItem>
-                  <CommandItem onSelect={() => runCommand(() => router.push("/posts/building-this-site"))}>
-                    <FileText className="mr-2 h-4 w-4" />
-                    <span>Building this site</span>
-                  </CommandItem>
+                <CommandGroup heading="Posts">
+                  {/* --- 重点：这里开始遍历传入的 posts 数组 --- */}
+                  {posts.map((post) => (
+                    <CommandItem 
+                      key={post.slug} 
+                      value={post.title} // 这个 value 是用于搜索匹配的关键词
+                      onSelect={() => runCommand(() => router.push(`/posts/${post.slug}`))}
+                    >
+                      <FileText className="mr-2 h-4 w-4" />
+                      <span>{post.title}</span>
+                    </CommandItem>
+                  ))}
+                  {/* --------------------------------------- */}
                 </CommandGroup>
              </CommandList>
           </div>

@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { SiteSearch } from "@/components/site-search";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ThemeToggle } from "@/components/theme-toggle"; // 根据你的截图，你用的是这个组件
+import { ThemeToggle } from "@/components/theme-toggle"; 
 import {
   Dialog,
   DialogContent,
@@ -15,11 +14,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Mail, Copy, Check,  Home, Rocket, Layers, User } from "lucide-react";
+import { Mail, Copy, Check, Home, Rocket, Layers, User } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { SiteSearch } from "@/components/site-search"; // 引入搜索组件
 
-// 定义导航链接
+// 定义接口，用于接收 props
+interface PostMeta {
+  slug: string;
+  title: string;
+  date: string;
+}
+
 const navItems = [
   { name: "首页", href: "/", icon: Home },
   { name: "项目实战", href: "/projects", icon: Rocket },
@@ -27,7 +33,8 @@ const navItems = [
   { name: "关于我", href: "/about", icon: User },
 ];
 
-export function Navbar() {
+// 修改 Navbar 组件定义，接收 posts 属性
+export function Navbar({ posts = [] }: { posts?: PostMeta[] }) {
   const pathname = usePathname();
   const [isCopied, setIsCopied] = useState(false);
   const email = "13484079700@163.com";
@@ -42,13 +49,10 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-4">
-        {/* Logo 区域 */}
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2 font-bold">
             <span>JtLe</span>
           </Link>
-          
-          {/* 桌面端导航 */}
           <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
             {navItems.map((item) => (
               <Link
@@ -66,12 +70,12 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* 右侧功能区 */}
         <div className="flex flex-1 items-center justify-end space-x-2">
-          {/* 搜索按钮 (已修复 size 报错) */}
-          <SiteSearch />
+          
+          {/* --- 重点：把 posts 传给搜索组件 --- */}
+          <SiteSearch posts={posts} />
+          {/* -------------------------------- */}
 
-          {/* --- Contact Me 弹窗 --- */}
           <Dialog>
             <DialogTrigger asChild>
               <Button
@@ -119,7 +123,6 @@ export function Navbar() {
               </div>
             </DialogContent>
           </Dialog>
-          {/* --- 弹窗结束 --- */}
 
           <ThemeToggle />
         </div>
