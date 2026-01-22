@@ -62,7 +62,7 @@
   --secondary-foreground: #111827;
   --muted: #ececef;
   --muted-foreground: #4b5563;
-  --accent: 240 4.8% 95.9%;  
+  --accent: 240 5.9% 90%; 
   --accent-foreground: 240 5.9% 10%;
   --destructive: #ff4d4f;
   --border: rgba(17, 24, 39, 0.12);
@@ -97,7 +97,7 @@
   --secondary-foreground: #f3f4f6;
   --muted: #14161b;
   --muted-foreground: #9ca3af;
-  --accent: 240 3.7% 15.9%; 
+  --accent: 240 5% 26%; 
   --accent-foreground: 0 0% 98%;
   --destructive: #ff4d4f;
   --border: rgba(255, 255, 255, 0.08);
