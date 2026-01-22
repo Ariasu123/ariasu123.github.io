@@ -9,8 +9,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-neutral-900">
-      <section className="relative flex h-[60vh] min-h-[500px] items-center justify-center bg-[url('/hero_bg.jpg')] bg-cover bg-center">
-        <div className="absolute inset-0 bg-black/40" />
+      <section
+        className="relative flex h-[60vh] min-h-[500px] items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
         <h1 className="relative z-10 text-4xl font-semibold text-gray-100 sm:text-5xl">
           I am Ariasu
         </h1>
