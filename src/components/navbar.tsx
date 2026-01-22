@@ -4,15 +4,27 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import {
+  Home,
+  Layers,
+  Library,
+  Menu,
+  Rocket,
+  Search,
+  UserCircle,
+  X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
-];
+const iconMap = {
+  home: Home,
+  rocket: Rocket,
+  library: Library,
+  layers: Layers,
+  user: UserCircle,
+} as const;
 
 export function Navbar() {
   const pathname = usePathname();
@@ -22,29 +34,40 @@ export function Navbar() {
     setOpen(false);
   }, [pathname]);
 
+  const navItems = siteConfig.navItems ?? [];
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-black/40 backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-sm font-semibold text-foreground">
+        <Link href="/" className="text-sm font-semibold text-gray-100">
           {siteConfig.name}
         </Link>
-        <div className="flex items-center gap-3">
-          <nav className="hidden items-center gap-6 text-sm md:flex">
-            {navItems.map((item) => (
+        <nav className="hidden flex-1 items-center justify-center gap-2 text-sm md:flex">
+          {navItems.map((item) => {
+            const Icon = iconMap[item.icon as keyof typeof iconMap];
+            return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "transition hover:text-primary",
-                  pathname === item.href
-                    ? "text-primary"
-                    : "text-muted-foreground"
+                  "inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-400 transition hover:bg-secondary hover:text-gray-100",
+                  pathname === item.href && "bg-secondary text-gray-100"
                 )}
               >
-                {item.label}
+                {Icon ? <Icon className="h-4 w-4" /> : null}
+                <span>{item.label}</span>
               </Link>
-            ))}
-          </nav>
+            );
+          })}
+        </nav>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Search"
+            className="inline-flex h-9 w-9 items-center justify-center border border-border text-gray-100 transition hover:border-primary hover:text-primary"
+          >
+            <Search className="h-4 w-4" />
+          </button>
           <ThemeToggle />
           <button
             type="button"
@@ -52,7 +75,7 @@ export function Navbar() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((prev) => !prev)}
-            className="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground transition hover:border-primary hover:text-primary md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center border border-border text-gray-100 transition hover:border-primary hover:text-primary md:hidden"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -69,21 +92,23 @@ export function Navbar() {
             className="overflow-hidden border-t border-border bg-black/40 backdrop-blur-md md:hidden"
           >
             <nav className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-6 py-4 text-sm">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "transition hover:text-primary",
-                    pathname === item.href
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const Icon = iconMap[item.icon as keyof typeof iconMap];
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "flex items-center gap-2 rounded-md px-2 py-2 text-gray-400 transition hover:bg-secondary hover:text-gray-100",
+                      pathname === item.href && "bg-secondary text-gray-100"
+                    )}
+                  >
+                    {Icon ? <Icon className="h-4 w-4" /> : null}
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
             </nav>
           </motion.div>
         ) : null}
