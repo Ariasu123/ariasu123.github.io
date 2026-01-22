@@ -7,7 +7,6 @@ export const siteConfig = {
   navItems: [
     { label: "首页", href: "/", icon: "home" },
     { label: "项目实战", href: "/projects", icon: "rocket" },
-    { label: "知识库", href: "/wiki", icon: "library" },
     { label: "技术栈", href: "/stack", icon: "layers" },
     { label: "关于我", href: "/about", icon: "user" },
   ],
