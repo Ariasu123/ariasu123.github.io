@@ -10,10 +10,13 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-neutral-900">
-      <HeroParallax title="I am Ariasu" />
+      <HeroParallax title="I am Ariasu" scrollTargetId="content-start" />
 
       <div className="relative z-10 -mt-24 pb-24">
-        <div className="mx-auto w-full max-w-4xl rounded-t-3xl bg-background px-6 pt-10 shadow-2xl">
+        <div
+          id="content-start"
+          className="mx-auto w-full max-w-4xl rounded-t-3xl bg-background px-6 pt-10 shadow-2xl"
+        >
           <FadeIn>
             <section className="space-y-6 pb-12">
               <div className="flex flex-wrap items-center justify-between gap-4">
