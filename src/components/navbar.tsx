@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  Check,
   Home,
   Layers,
   Library,
+  Mail,
   Menu,
+  Copy,
   Rocket,
   Search,
   UserCircle,
@@ -17,6 +20,16 @@ import {
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 const iconMap = {
   home: Home,
@@ -29,10 +42,36 @@ const iconMap = {
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const email = "13484079700@163.com";
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleCopy = async () => {
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current);
+    }
+
+    try {
+      await navigator.clipboard.writeText(email);
+      setIsCopied(true);
+      toast.success("Email copied to clipboard!");
+      copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
+    } catch (error) {
+      toast.error("Unable to copy email.");
+    }
+  };
 
   const navItems = siteConfig.navItems ?? [];
 
@@ -69,6 +108,55 @@ export function Navbar() {
             <Search className="h-4 w-4" />
           </button>
           <ThemeToggle />
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                size="sm"
+                variant="default"
+                className="hidden rounded-full md:inline-flex"
+              >
+                <Mail className="mr-2 size-3.5" />
+                Contact Me
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader className="space-y-2">
+                <DialogTitle>Get in touch</DialogTitle>
+                <p className="text-sm text-muted-foreground">
+                  Feel free to reach out for collaborations or just a chat about
+                  Vibe Coding.
+                </p>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Input readOnly value={email} />
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="outline"
+                    onClick={handleCopy}
+                    aria-label="Copy email"
+                  >
+                    {isCopied ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    window.location.href = `mailto:${email}`;
+                  }}
+                  className="w-full"
+                >
+                  Open Mail App
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
           <button
             type="button"
             aria-label="Toggle menu"
