@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Mail, Copy, Check, Home, Rocket, Layers, User } from "lucide-react";
+import { Mail, Copy, Check, Home, Rocket, Layers, User , Archive} from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { SiteSearch } from "@/components/site-search"; // 引入搜索组件
@@ -27,10 +27,11 @@ interface PostMeta {
 }
 
 const navItems = [
-  { name: "首页", href: "/", icon: Home },
-  { name: "项目实战", href: "/projects", icon: Rocket },
-  { name: "技术栈", href: "/stack", icon: Layers },
-  { name: "关于我", href: "/about", icon: User },
+  { name: "Home", href: "/", icon: Home },          // 首页 -> Home
+  { name: "Projects", href: "/projects", icon: Rocket }, // 项目实战 -> Projects
+  { name: "Archive", href: "/archive", icon: Archive },
+  { name: "Stack", href: "/stack", icon: Layers },    // 技术栈 -> Stack
+  { name: "About", href: "/about", icon: User },      // 关于我 -> About
 ];
 
 // 修改 Navbar 组件定义，接收 posts 属性
