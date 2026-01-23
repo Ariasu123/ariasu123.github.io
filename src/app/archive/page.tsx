@@ -48,7 +48,7 @@ export default function ArchivePage() {
           Archive
         </h1>
         <p className="text-lg text-muted-foreground">
-          共计 <span className="font-medium text-foreground">{posts.length}</span> 篇沉淀。
+        <span className="font-medium text-foreground">{posts.length}</span> posts in total.
         </p>
       </div>
 
