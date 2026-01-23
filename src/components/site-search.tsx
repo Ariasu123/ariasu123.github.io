@@ -54,7 +54,7 @@ export function SiteSearch({ posts = [] }: { posts?: PostMeta[] }) {
       >
         <div className="flex items-center pr-3">
             <CommandInput 
-                placeholder="搜索文章..." 
+                placeholder="" 
                 className="h-9 border-none bg-transparent focus:ring-0 outline-none [&_svg]:hidden pl-3" 
                 onFocus={() => setOpen(true)} 
             />
@@ -71,7 +71,13 @@ export function SiteSearch({ posts = [] }: { posts?: PostMeta[] }) {
                     <CommandItem 
                       key={post.slug} 
                       value={post.title} // 这个 value 是用于搜索匹配的关键词
-                      onSelect={() => runCommand(() => router.push(`/posts/${post.slug}`))}
+                      // 1. 改成 /blog/
+                      // 2. 加个 .toLowerCase() 以防万一 (URL 通常都用小写)
+                      onSelect={() =>
+                        runCommand(() =>
+                          router.push(`/blog/${post.slug.toLowerCase()}`)
+                        )
+                      }
                     >
                       <FileText className="mr-2 h-4 w-4" />
                       <span>{post.title}</span>
